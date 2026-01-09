@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+    <?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+  </head>
+  <body>
+    <!-- Below is the HTML code that defines the sidebar element structure. -->
+    <div class="sidebar branding-below">
+      <p>
+        Agenda Generation Settings
+      </p>
+      <p>
+      <div id="sidebar-status">Loading...</div>
+      </p>
+
+      <!-- <div class="block form-group">
+        <label for="sidebar-footer-text">Footer Text:</label>
+        <textarea class="width-100" id="sidebar-footer-text" rows="10"></textarea>
+      </div> -->
+      <div class="input-group"><label>Calendar Event Title</label><input type="text" id="meeting-title"></div>
+      <div class="input-group"><label>Participant's Name</label><input type="text" id="p1-name"></div>
+      <div class="input-group"><label>Participant's Name</label><input type="text" id="p2-name"></div>
+      <div class="block" id="sidebar-button-bar">
+        <button class="action" id="sidebar-save-button">Save</button>
+      </div>
+    </div>
+
+    <div class="sidebar bottom">
+      <span class="gray branding-text">OoO Helper</span>
+    </div>
+
+    <!-- Use a templated HTML printing scriptlet to import JavaScript -->
+    <?!= HtmlService.createHtmlOutputFromFile('SidebarJavaScript').getContent(); ?>
+  </body>
+</html>

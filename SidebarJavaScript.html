@@ -1,0 +1,76 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  /**
+   * Run initializations on sidebar load.
+   */
+  $(function() {
+    // Assign handler functions to sidebar elements here, if needed.
+    $('#sidebar-save-button').click(onSaveSettingsClick);
+
+    // Call the server here to retrieve any information needed to build
+    // the sidebar, if necessary.
+    google.script.run
+       .withSuccessHandler(function(settings) {
+            $('#meeting-title').val(settings.eventTitle);
+            $('#p1-name').val(settings.p1Name);
+            $('#p2-name').val(settings.p2Name);
+
+            showStatus('Ready.');
+          })
+       .withFailureHandler(function(msg) {
+            Logger.log("its failin");
+            showStatus(msg, 'error');
+          })
+       .getSettings();
+  });
+
+  /**
+   * Calls the server to modify the document.
+   * Replaces the document footer text; formatting and styles will
+   * not be preserved.
+   */
+  function onSaveSettingsClick() {
+    this.disabled = true;
+
+    // Gather any information that needs to be sent to the server here.
+    var settings = {
+      eventTitle: $('#meeting-title').val(),
+      p1Name: $('#p1-name').val(),
+      p2Name: $('#p2-name').val()
+    }
+    // var sidebarText = $('#sidebar-footer-text').val();
+    showStatus('Saving...');
+    
+    // Send the value to the server and listen for a response.
+    google.script.run
+        .withSuccessHandler(
+          function(msg, element) {
+            // Respond to success conditions here.
+            showStatus('Saved.');
+            element.disabled = false;
+          })
+        .withFailureHandler(
+          function(msg, element) {
+            // Respond to failure conditions here.
+            showStatus(msg, 'error');
+            element.disabled = false;
+          })
+        .withUserObject(this)
+        .saveSettings(settings);
+  }
+
+  /**
+   * Displays the given status message in the sidebar.
+   *
+   * @param {String} msg The status message to display.
+   * @param {String} classId The message type (class id) that the message
+   *   should be displayed as.
+   */
+  function showStatus(msg, classId) {
+    $('#sidebar-status').removeClass().html(msg);
+    if (classId) {
+      $('#sidebar-status').addClass(classId);
+    }
+  }
+
+</script>

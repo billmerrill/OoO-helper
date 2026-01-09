@@ -2,6 +2,9 @@
  * @OnlyCurrentDoc  Limits the script to only accessing the current document.
  */
 
+/**
+ * UI Management
+ */
 var SIDEBAR_TITLE = 'OoO Settings';
 
 function onOpen(e) {
@@ -24,14 +27,3 @@ function showSidebar() {
   DocumentApp.getUi().showSidebar(ui);
 }
 
-
-function getSettings() {
-  return NSPropertyHelper.getAll();
-}
-
-function saveSettings(settings) {
-  const saveSettings = {'eventTitle': settings['eventTitle'],
-                         'p1Name': settings['p1Name'],
-                         'p2Name': settings['p2Name']}
-  NSPropertyHelper.setAll(saveSettings);
-}

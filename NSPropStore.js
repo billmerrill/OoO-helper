@@ -83,3 +83,15 @@ const NSPropertyHelper = {
     }
   },
 };
+
+function getSettings() {
+  return NSPropertyHelper.getAll();
+}
+
+function saveSettings(settings) {
+  const saveSettings = {'eventTitle': settings['eventTitle'],
+                         'p1Name': settings['p1Name'],
+                         'p2Name': settings['p2Name']}
+  NSPropertyHelper.setAll(saveSettings);
+}
+
